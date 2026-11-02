@@ -11,11 +11,18 @@
  *   First 50 chars: { "userId": 1, "id": 1, "title": "sunt aut...
  *
  * @param {string} url
- * @param {number} delay - milliseconds to wait before fetching
+ * @param {number} delay milliseconds to wait before fetching
  * @returns {Promise} resolves after the result was printed (so whoever calls the function can wait for it)
  */
-function fetchWithDelay(url, delay) {
-  // write your code here
+async function fetchWithDelay(url, delay) {
+  try {
+    await new Promise((resolve) => setTimeout(resolve, delay));
+    const response = await fetch(url);
+    const text = await response.text();
+    console.log(`First 50 chars: ${text.slice(0, 50)}`);
+  } catch (error) {
+    console.log("Something went wrong:", error.message);
+  }
 }
 
 module.exports = { fetchWithDelay };
